@@ -1,0 +1,3 @@
+[submodule "cmdf2/lib/Karabiner-VirtualHIDDevice"]
+	path = cmdf2/lib/Karabiner-VirtualHIDDevice
+	url = https://github.com/pqrs-org/Karabiner-VirtualHIDDevice-archived
