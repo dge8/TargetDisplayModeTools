@@ -57,24 +57,22 @@ The Mavericks installer PKG is available from the Mac App Store using the link [
 ### Triggering Target Display Mode without a physical keyboard or mouse
 *Problem*: Want to remotely toggle Target Display Mode over SSH. 
 
-*Solution*: Install [Karabiner Elements](https://karabiner-elements.pqrs.org), which includes a compiled and signed kext for [Karabiner-VirtualHIDDevice](https://github.com/pqrs-org/Karabiner-VirtualHIDDevice-archived). Compile `cmdf2` code in this repo (based on `Karabiner-VirtualHIDDevice/example/virtual_keyboard_example`) and run as sudo over SSH to trigger TDM.
-Use `modifier::left_command` followed by `kHIDUsage_Csmr_DisplayBrightnessIncrement`.
-`AppleVendorKeyboard_Brightness_Up` doesn’t work for some reason.
+*Solution*: Install the [Karabiner Elements](https://karabiner-elements.pqrs.org) v12.10.0, the latest available for High Sierra, which includes a compiled and signed kext for [Karabiner-VirtualHIDDevice](https://github.com/pqrs-org/Karabiner-VirtualHIDDevice-archived). Compile `cmdf2` code in this repo (based on `Karabiner-VirtualHIDDevice/example/virtual_keyboard_example`) and run as sudo over SSH to trigger TDM.
 
-*Other useful references*:
+*Useful references*:
 - <https://github.com/pqrs-org/Karabiner-VirtualHIDDevice-archived/blob/master/src/include/karabiner_virtual_hid_device.hpp.tmpl>
 <https://opensource.apple.com/source/IOHIDFamily/IOHIDFamily-700/IOHIDFamily/AppleHIDUsageTables.h>
-
-*Possible solution*: Remap some keys using Karabiner as per
-<https://apple.stackexchange.com/questions/170175/switch-to-target-display-mode-without-keyboard>
-
-*Possible solution*: Remap keys with `hidutil` and `launchd` as per <https://rakhesh.com/mac/using-hidutil-to-map-macos-keyboard-keys/> and <https://hidutil-generator.netlify.app>
 
 *Almost solution*: `osascript` over SSH works on macOS 10.6.8 (apparently up to 10.9.5 according to above link): `osascript -e 'tell application "System Events" to key code 144 using command down'`. Confirmed not working on 10.13.6 despite enabling Accessibility access for Terminal and Script Editor. <https://apple.stackexchange.com/questions/362787/automator-and-or-applescript-to-automatically-command-f2-to-enter-target-display>
 
 *Almost solution*: [VirtualKVM](https://github.com/duanefields/VirtualKVM) seems like it might work for those that want TDM triggered upon attach/detach of Thunderbolt between their MacBook and iMac (along with simultaneous enable/disable of Bluetooth to facilitate transfer of mouse/keyboard control) and don’t mind a helper app running on both devices. However, couldn’t get it to work, possibly due to network issues blocking client-host connection or possibly due to daisy-chaining my iMac off an Apple Thunderbolt Display (MBP connects to TBD).
 
 *Almost solution*: <https://github.com/BlueM/cliclick> - didn’t work over SSH, tried Cmd with F2, brightness, etc.
+
+*Possible solution*: Remap some keys using Karabiner as per
+<https://apple.stackexchange.com/questions/170175/switch-to-target-display-mode-without-keyboard>
+
+*Possible solution*: Remap keys with `hidutil` and `launchd` as per <https://rakhesh.com/mac/using-hidutil-to-map-macos-keyboard-keys/> and <https://hidutil-generator.netlify.app>
 
 ### Reducing fan speed when iMac hard drive is removed
 *Problem*: iMac HDD fan runs loudly all the time with no hard drive
@@ -99,6 +97,7 @@ Note: use RunAtLoad instead of LaunchOnlyOnce
 - To stop Screen Sharing locking the screen when disconnecting: `sudo defaults write /Library/Preferences/com.apple.RemoteManagement RestoreMachineState -bool NO`
 - SilentKnight checks EFI is up-to-date and can install updates for e.g. Gatekeeper and XProtect <https://eclecticlight.co/lockrattler-systhist/>
     - Command-line version `silnite` requires Swift Runtime for Command Line Tools: <https://support.apple.com/kb/dl1998?locale=en_US>
+- cmdf2 sends `modifier::left_command` followed by `kHIDUsage_Csmr_DisplayBrightnessIncrement`. `AppleVendorKeyboard_Brightness_Up` doesn’t work for some reason.
 - 2011 iMac graphics card upgrade megathread: <https://forums.macrumors.com/threads/2011-imac-graphics-card-upgrade.1596614/>
 - Some macOS install packages combine the installer PKG file and the InstallESD DMG and can be mounted directly using `hdiutil attach`
 - Older macOS (e.g. 10.6.8) don’t support ed25519 SSH keys
