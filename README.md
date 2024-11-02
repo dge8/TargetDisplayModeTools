@@ -9,7 +9,7 @@ A few years ago during COVID lockdown I purchased a broken 27" 2011 iMac to use 
 
 Hopefully sharing these notes will keep a few more 27" iMacs from being thrown out.
 
-## Repo contents
+## Contents
 - `cmdf2` simulates connecting a physical keyboard and pressing Cmd-F2 to activate Target Display Mode. It works over SSH and even without console login (IIRC. Otherwise create a regular user and enable auto-login). It uses Karabiner's VirtualHIDDevice kext and is based on [this example code](https://github.com/pqrs-org/Karabiner-VirtualHIDDevice-archived/tree/master/example/virtual_keyboard_example). You'll need Xcode Command Line Tools to compile.
 - `tdm.fish` contains a fish shell function for controlling TDM over SSH and e.g. demonstrates use of `cmdf2` via SSH.
 - `com.local.LimitHDDFan.plist` is a `launchd` job file to limit fan speed on startup using smcFanControl.
@@ -17,10 +17,11 @@ Hopefully sharing these notes will keep a few more 27" iMacs from being thrown o
 ## Procedure
 - Install fresh macOS 10.13 High Sierra from USB
 - If GPU is faulty, move graphics kexts out of `/System/Library/Extensions` and rebuild kext cache (more details below). Probably need to disable SIP. Graphics and VNC screen sharing will be slow.
-- Connect to network and install updates, enable SSH and VNC access for admin user
+- Connect to network and install updates, enable SSH and VNC access for admin user. Keyboard and mouse no longer required.
 - Replace `/usr/libexec/dpd` with version from latest Mavericks installer (more details below)
+- Compile or download cmdf2 binary and put in e.g. `/usr/local/bin`
 - If hard drive is missing, install smcFanControl and add `launchd` job to limit fan speed (more details below)
-- Success!
+- You should now be able to connect the iMac via a Thunderbolt cable to your main Mac and run `sudo cmdf2` via SSH to toggle Target Display Mode.
 
 ## Problems and solutions
 
