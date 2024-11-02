@@ -48,7 +48,11 @@ Hopefully sharing these notes will keep a few more 27" iMacs from being thrown o
  
 *Cause*: Target Display Mode is toggled by `com.apple.dpd` (a single binary located at `/usr/libexec/dpd`) which listens for the Cmd-F2 sequence. dpd is repeatedly crashing which means TDM cannot be triggered.
 
-*Solution*: The issue seems to just affect `dpd` binaries from 10.10 Yosemite onwards (tested on 10.10.5, 10.11.6, 10.13.6 `dpd`). Replacing the later `dpd` binary with the 10.9.5 Mavericks `dpd` (MD5: `6355f7378348de906ad1ace46c936c8c`) resolves the issue. This can be directly extracted by mounting the Mavericks installer PKG with `hdiutil attach` and opening `/Packages/BSD.pkg` in e.g. Suspicious Package.
+*Solution*: The issue seems to just affect `dpd` binaries from 10.10 Yosemite onwards (tested on 10.10.5, 10.11.6, 10.13.6 `dpd`). Replacing the later `dpd` binary with the 10.9.5 Mavericks `dpd` (MD5: `6355f7378348de906ad1ace46c936c8c`) resolves the issue.
+
+This can be obtained from the Mavericks installer PKG by directly mounting it with `hdiutil attach` and opening `/Packages/BSD.pkg` in e.g. Suspicious Package.
+
+The Mavericks installer PKG is available from the Mac App Store using the link [here](https://support.apple.com/en-au/102662), or by using `mas-cli` with `mas install 675248567` as long as it has already been purchased, as per <https://forums.macrumors.com/threads/can-someone-give-me-a-mavericks-download-link.2279301/>.
 
 ### Triggering Target Display Mode without a physical keyboard or mouse
 *Problem*: Want to remotely toggle Target Display Mode over SSH. 
@@ -91,7 +95,6 @@ Note: use RunAtLoad instead of LaunchOnlyOnce
 
 ### Miscellaneous notes
 - `dpd` has an associated binary `dpaudiothru` responsible for passing through audio which seems to work fine on newer macOS versions.
-- macOS Mavericks installer can be downloaded from the Mac App Store using `mas-cli` with `mas install 675248567` as long as it has already been purchased, as per <https://forums.macrumors.com/threads/can-someone-give-me-a-mavericks-download-link.2279301/>
 - `dmtest` reinstalls missing recovery partitions: `./dmtest ensureRecoveryPartition` <https://davidjb.com/blog/2016/12/creating-a-macos-recovery-partition-without-reinstalling-osx-or-re-running-your-installer/>
 - To stop Screen Sharing locking the screen when disconnecting: `sudo defaults write /Library/Preferences/com.apple.RemoteManagement RestoreMachineState -bool NO`
 - SilentKnight checks EFI is up-to-date and can install updates for e.g. Gatekeeper and XProtect <https://eclecticlight.co/lockrattler-systhist/>
